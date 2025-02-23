@@ -23,6 +23,7 @@ SOFTWARE.
 #include <fstream>
 #include <iostream>
 #include <thread>
+#include "test_millionaires.cpp"
 
 using namespace sci;
 using namespace std;
@@ -67,6 +68,14 @@ int main(int argc, char **argv) {
   amap.arg("ip", address, "IP Address of server (ALICE)");
 
   amap.parse(argc, argv);
+
+  if (party == 1) {
+    /* run millionaires test */
+    //TODO: I am running it from here because I'm not sure how to add to CMake
+    std::cout << "Run Millionaires Test" << std::endl;
+    millionaires_test_main();
+    std::cout << "done with millionaires" << std::endl;
+  }
 
   assert(num_threads <= MAX_THREADS);
 
