@@ -60,12 +60,16 @@ int main(int argc, char **argv) {
   /************* Argument Parsing  ************/
   /********************************************/
   ArgMapping amap;
+  uint64_t alice_num = 0;
+  uint64_t bob_num = 0;
   amap.arg("r", party, "Role of party: ALICE = 1; BOB = 2");
   amap.arg("p", port, "Port Number");
   amap.arg("N", dim, "Number of ReLU operations");
   amap.arg("nt", num_threads, "Number of threads");
   amap.arg("six", six_comparison, "ReLU6?");
   amap.arg("ip", address, "IP Address of server (ALICE)");
+  amap.arg("a", alice_num, "Alice's number to compare");
+  amap.arg("b", bob_num, "Bob's number to compare");
 
   amap.parse(argc, argv);
 
@@ -73,15 +77,15 @@ int main(int argc, char **argv) {
     /* run millionaires test */
     //TODO: I am running it from here because I'm not sure how to add to CMake
     std::cout << "Run Millionaires Test" << std::endl;
-    millionaires_test_main();
+    test_millionaire_protocol(alice_num, bob_num);
     std::cout << "done with millionaires" << std::endl;
   }
 
-  assert(num_threads <= MAX_THREADS);
+//  assert(num_threads <= MAX_THREADS);
 
   /********** Setup IO and Base OTs ***********/
   /********************************************/
-  for (int i = 0; i < num_threads; i++) {
+ /* for (int i = 0; i < num_threads; i++) {
     iopackArr[i] = new IOPack(party, port + i, address);
     if (i & 1) {
       otpackArr[i] = new OTPack(iopackArr[i], 3 - party);
@@ -90,10 +94,10 @@ int main(int argc, char **argv) {
     }
   }
   std::cout << "All Base OTs Done" << std::endl;
-
+*/
   /************ Generate Test Data ************/
   /********************************************/
-  PRG128 prg;
+ /* PRG128 prg;
 
   uint64_t *x = new uint64_t[dim];
   uint64_t *y = new uint64_t[dim];
@@ -108,10 +112,10 @@ int main(int argc, char **argv) {
     six = (6ULL << s_x);
   else
     six = 0;
-
+*/
   /************** Fork Threads ****************/
   /********************************************/
-  uint64_t total_comm = 0;
+/*  uint64_t total_comm = 0;
   uint64_t thread_comm[num_threads];
   for (int i = 0; i < num_threads; i++) {
     thread_comm[i] = iopackArr[i]->get_comm();
@@ -140,10 +144,10 @@ int main(int argc, char **argv) {
     thread_comm[i] = iopackArr[i]->get_comm() - thread_comm[i];
     total_comm += thread_comm[i];
   }
-
+*/
   /************** Verification ****************/
   /********************************************/
-  if (party == ALICE) {
+/*  if (party == ALICE) {
     iopackArr[0]->io->send_data(x, dim * sizeof(uint64_t));
     iopackArr[0]->io->send_data(y, dim * sizeof(uint64_t));
   } else { // party == BOB
@@ -171,19 +175,19 @@ int main(int argc, char **argv) {
     delete[] x0;
     delete[] y0;
   }
-
+*/
   /**** Process & Write Benchmarking Data *****/
   /********************************************/
-  cout << "Number of ReLU/s:\t" << (double(dim) / t) * 1e6 << std::endl;
+/*  cout << "Number of ReLU/s:\t" << (double(dim) / t) * 1e6 << std::endl;
   cout << "ReLU Time\t" << t / (1000.0) << " ms" << endl;
   cout << "ReLU Bytes Sent\t" << total_comm << " bytes" << endl;
-
+*/
   /******************* Cleanup ****************/
   /********************************************/
-  delete[] x;
+/*  delete[] x;
   delete[] y;
   for (int i = 0; i < num_threads; i++) {
     delete iopackArr[i];
     delete otpackArr[i];
-  }
+  }*/
 }

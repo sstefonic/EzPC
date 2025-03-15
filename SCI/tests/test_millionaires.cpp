@@ -51,7 +51,7 @@ void millionaire_thread(int party, uint8_t* result, uint64_t number) {
 
   // I believe the number of comparisons is how many numbers you want to compare
   int num_comparisons = 1;
-  int bit_length = 8;
+  int bit_length = 64;
 
   // bit_length is the number of bits in each number (to be compared)
   mil_protocol.compare(result, &number, num_comparisons, bit_length);
