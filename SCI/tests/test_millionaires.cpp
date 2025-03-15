@@ -8,6 +8,14 @@
 using namespace sci;
 using namespace std;
 
+/*
+  This is a series of simple tests to verify that the millionaires protocol works as expected.
+  The tests can be run by building the SCI directory as expected and then by running ./bin/relu-OT r=1 & ./bin/relu-OT r=2
+  (It will run these tests and then the relu tests)
+  I placed the call of these tests inside of test_ring_relu.cpp because I haven't quite figured out how to add an executable
+  for just this test to the CMakeLists.
+*/
+
 void millionaire_thread(int party, uint8_t* result, uint64_t number);
 
 void test_millionaire_protocol(uint64_t alice_number, uint64_t bob_number) {
@@ -38,6 +46,9 @@ void test_millionaire_protocol(uint64_t alice_number, uint64_t bob_number) {
   }
 }
 
+/*
+  each party runs this function for each test
+*/
 void millionaire_thread(int party, uint8_t* result, uint64_t number) {
   int port = 32050;
   string address = "127.0.0.1";
